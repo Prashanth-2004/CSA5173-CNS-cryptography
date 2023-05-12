@@ -1,0 +1,27 @@
+Q.No. 20 Write a high-level code for the following ciphertext was generated using a simple substitution algorithm.
+53‡‡†305))6*;4826)4‡.)4‡);806*;48†8¶60))85;;]8*;:‡8†83 (88)5†;46(;88*96*?;8)‡(;485);5†2:‡(;4956*2(5—4)8¶8*
+;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡1;48†85;4)485†528806*81 (‡9;48;(88;4(‡?34;48)4‡;161;:188;‡?;
+Decrypt this message.
+CODE :
+ciphertext = "53‡‡†305))6*;4826)4‡.)4‡);806*;48†8¶60))85;;]8*;:‡8†83 (88)5†;46(;88*96*?;8)‡(;485);5†2:‡(;4956*2(5—4)8¶8*;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡1;48†85;4)485†528806*81 (‡9;48;(88;4(‡?34;48)4‡;161;:188;‡?"
+
+# Define the decryption key as a dictionary
+key = {
+    '†': 'e', '‡': 't', '¶': 'a', '—': 'o', ';': 'i', ')': 'n', '*': 's', '(': 'h',
+    ':': 'r', '8': 'd', '4': 'l', '5': 'u', '6': 'c', '0': 'm', '3': 'g', '9': 'f',
+    '2': 'y', '[': 'p', ']': 'b', '?': 'v', '1': 'w', '—': 'k', '—': 'x', '—': 'j',
+    '—': 'q', '—': 'z'
+}
+
+# Decrypt the ciphertext
+plaintext = ''
+for char in ciphertext:
+    if char in key:
+        plaintext += key[char]
+    else:
+        plaintext += char
+
+# Print the decrypted message
+print(plaintext)
+OUTPUT :
+ 
