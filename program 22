@@ -1,0 +1,35 @@
+22 . Write a High-level code that can perform a letter frequency attack on an additive cipher without human intervention.
+CODE :
+import string
+def letter_frequency_attack(ciphertext):
+    letter_frequencies = {}
+    total_letters = 0
+    for letter in ciphertext:
+        if letter.isalpha():
+            letter = letter.lower()
+            letter_frequencies[letter] = letter_frequencies.get(letter, 0) + 1
+            total_letters += 1
+    for letter, frequency in letter_frequencies.items():
+        letter_frequencies[letter] = frequency / total_letters
+    sorted_frequencies = sorted(letter_frequencies.items(), key=lambda x: x[1], reverse=True)
+    most_frequent_letter = sorted_frequencies[0][0]
+    key = (ord(most_frequent_letter) - ord('e')) % 26
+    plaintext = ""
+    for letter in ciphertext:
+        if letter.isalpha():
+            if letter.isupper():
+                decrypted_letter = chr((ord(letter) - ord('A') - key) % 26 + ord('A'))
+            else:
+                decrypted_letter = chr((ord(letter) - ord('a') - key) % 26 + ord('a'))
+            plaintext += decrypted_letter
+        else:
+            plaintext += letter
+    return key, plaintext
+ciphertext = "Bzdrzq bhogdq? H oqdedq Bzdrzq rhq ybdr?"
+key, plaintext = letter_frequency_attack(ciphertext)
+print("Key:", key)
+print("Plaintext:", plaintext)
+OUTPUT :
+ 
+ 
+ 
