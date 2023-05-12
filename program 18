@@ -1,0 +1,66 @@
+18. Write a high-level code for Bob using the RSA cryptosystem with a very large modulus n for which the factorization cannot be found in a reasonable amount of time. Suppose Alice sends a message to Bob by representing each alphabetic character as an integer between 0 and 25 (A S 0, c, Z S 25) and then encrypting each number separately using RSA with large e and large n. Is this method secure? If not, describe the most efficient attack against this encryption method.
+
+CODE :
+import random
+# function to check if a number is prime
+def is_prime(num):
+    if num == 2:
+        return True
+    if num < 2 or num % 2 == 0:
+        return False
+    for n in range(3, int(num ** 0.5) + 2, 2):
+        if num % n == 0:
+            return False
+    return True
+# function to compute the gcd of two numbers
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+# function to generate the public and private keys
+def generate_keys():
+    # generate two large prime numbers
+    p = random.randint(1000, 10000)
+    while not is_prime(p):
+        p += 1
+    q = random.randint(1000, 10000)
+    while not is_prime(q) or q == p:
+        q += 1
+    # compute n and phi(n)
+    n = p * q
+    phi_n = (p-1) * (q-1)
+    # choose a large random exponent e that is relatively prime to phi(n)
+    e = random.randint(10000, 100000)
+    while gcd(e, phi_n) != 1:
+        e += 1
+    # compute the modular multiplicative inverse of e modulo phi(n)
+    d = pow(e, -1, phi_n)
+    return (e, n), (d, n)
+# function to encrypt a message
+def encrypt(public_key, message):
+    e, n = public_key
+    cipher = []
+    for m in message:
+        c = pow(ord(m)-65, e, n)
+        cipher.append(c)
+    return cipher
+# function to decrypt a message
+def decrypt(private_key, cipher):
+    d, n = private_key
+    message = ''
+    for c in cipher:
+        m = pow(c, d, n)
+        message += chr(m+65)
+    return message
+# example usage
+public_key, private_key = generate_keys()
+print("Public key:", public_key)
+print("Private key:", private_key)
+message = "HELLO WORLD"
+cipher = encrypt(public_key, message)
+print("Encrypted message:", cipher)
+decrypted_message = decrypt(private_key, cipher)
+print("Decrypted message:", decrypted_message)
+
+OUTPUT :
+ 
